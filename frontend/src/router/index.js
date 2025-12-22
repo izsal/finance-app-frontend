@@ -4,6 +4,8 @@ import Register from "../views/Register.vue";
 import TodoList from "../views/Todolist.vue";
 import FinanceDashboard from "../views/FinanceDashboard.vue";
 import Dashboard from "../views/Dashboard.vue";
+import IncomeCategories from "../views/IncomeCategories.vue";
+import ExpenseCategories from "../views/ExpenseCategories.vue";
 
 const routes = [
   {
@@ -29,6 +31,14 @@ const routes = [
   {
     path: "/dashboard",
     component: Dashboard,
+  },
+  {
+    path: "/categories/income",
+    component: IncomeCategories,
+  },
+  {
+    path: "/categories/expense",
+    component: ExpenseCategories,
   },
 ];
 

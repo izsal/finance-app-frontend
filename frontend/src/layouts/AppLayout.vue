@@ -34,6 +34,26 @@
             <v-list-item-title>Finance</v-list-item-title>
           </v-list-item>
         </v-list-item-group>
+
+        <!-- Category Management Section -->
+        <v-list-group>
+          <template v-slot:activator="{ props }">
+            <v-list-item v-bind="props">
+              <v-list-item-icon>
+                <v-icon>mdi-folder-multiple</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title>Categories</v-list-item-title>
+            </v-list-item>
+          </template>
+
+          <v-list-item to="/categories/income">
+            <v-list-item-title>Income Categories</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item to="/categories/expense">
+            <v-list-item-title>Expense Categories</v-list-item-title>
+          </v-list-item>
+        </v-list-group>
       </v-list>
 
       <template v-slot:append>

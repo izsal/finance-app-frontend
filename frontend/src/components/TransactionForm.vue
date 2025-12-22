@@ -14,14 +14,38 @@
           </v-col>
 
           <v-col cols="12">
-            <v-text-field
+            <v-select
               v-model="form.category"
+              :items="
+                form.type === 'income'
+                  ? categoryStore.incomeCategories
+                  : categoryStore.expenseCategories
+              "
+              item-title="name"
+              item-value="name"
               label="Category"
               outlined
               dense
               :rules="[(v) => !!v || 'Category is required']"
               required
-            ></v-text-field>
+            >
+              <template v-slot:append-item>
+                <v-list-item>
+                  <v-list-item-content>
+                    <v-text-field
+                      v-model="newCategory"
+                      label="Add new category"
+                      @keyup.enter="addNewCategory"
+                    />
+                  </v-list-item-content>
+                  <v-list-item-action>
+                    <v-btn icon @click="addNewCategory">
+                      <v-icon>mdi-plus</v-icon>
+                    </v-btn>
+                  </v-list-item-action>
+                </v-list-item>
+              </template>
+            </v-select>
           </v-col>
 
           <v-col cols="12">
@@ -90,7 +114,10 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from "vue";
+import { ref, computed, watch, onMounted } from "vue";
+import { useCategoryStore } from "../stores/category";
+
+const categoryStore = useCategoryStore();
 
 const props = defineProps({
   transaction: {
@@ -113,6 +140,20 @@ const emit = defineEmits(["save", "cancel"]);
 
 const form = ref({ ...props.transaction });
 const dateMenu = ref(false);
+const newCategory = ref("");
+
+// Watch for changes in transaction type to fetch appropriate categories
+watch(
+  () => form.value.type,
+  async (newType) => {
+    await categoryStore.fetchCategories(newType);
+  }
+);
+
+// Fetch categories for initial transaction type
+onMounted(async () => {
+  await categoryStore.fetchCategories(form.value.type);
+});
 
 const isEditing = computed(() => !!props.transaction.id);
 
@@ -170,6 +211,22 @@ function handleAmountBlur() {
     // This will trigger the getter to reformat the value
     const currentValue = form.value.amount;
     form.value.amount = currentValue;
+  }
+}
+
+// Add new category
+async function addNewCategory() {
+  if (!newCategory.value.trim()) return;
+
+  try {
+    await categoryStore.addCategory({
+      name: newCategory.value,
+      type: form.value.type,
+    });
+    form.value.category = newCategory.value;
+    newCategory.value = "";
+  } catch (error) {
+    console.error("Error adding category:", error);
   }
 }
 

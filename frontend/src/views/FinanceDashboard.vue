@@ -54,10 +54,12 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useTransactionStore } from "../stores/transaction";
+import { useCategoryStore } from "../stores/category";
 import TransactionForm from "../components/TransactionForm.vue";
 import TransactionList from "../components/TransactionList.vue";
 
 const transactionStore = useTransactionStore();
+const categoryStore = useCategoryStore();
 
 const dialogVisible = ref(false);
 const editingTransaction = ref({
@@ -76,6 +78,9 @@ const snackbar = ref({
 
 onMounted(async () => {
   await transactionStore.fetchTransactions();
+  // Fetch both income and expense categories
+  await categoryStore.fetchCategories("income");
+  await categoryStore.fetchCategories("expense");
 });
 
 const showSnackbar = (text, color = "success") => {
