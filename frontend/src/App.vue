@@ -7,7 +7,9 @@
 
     <!-- Show App Layout when authenticated -->
     <template v-else>
-      <AppLayout />
+      <div class="app-content">
+        <AppLayout />
+      </div>
     </template>
   </div>
 </template>
@@ -29,8 +31,12 @@ onMounted(() => {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  width: 100%;
+  min-height: 100vh;
 }
+
+/* Remove this from global App.vue style */
+/* text-align: center; */
+/* margin-top: 60px; */
 </style>

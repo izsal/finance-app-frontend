@@ -11,6 +11,9 @@
         <!-- Pie Chart -->
         <v-col cols="12" md="6">
           <PieChart />
+          <div class="mt-8">
+            <LineChart />
+          </div>
         </v-col>
 
         <!-- Recent Transactions -->
@@ -61,6 +64,7 @@ import { useRouter } from "vue-router";
 import { useTransactionStore } from "../stores/transaction";
 import SummaryCard from "../components/SummaryCard.vue";
 import PieChart from "../components/PieChart.vue";
+import LineChart from "../components/LineChart.vue";
 
 const transactionStore = useTransactionStore();
 const router = useRouter();

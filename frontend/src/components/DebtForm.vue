@@ -78,7 +78,7 @@
               </template>
               <v-date-picker
                 v-model="selectedDate"
-                @input="handleDateInput"
+                @update:model-value="handleDateInput"
               ></v-date-picker>
             </v-menu>
           </v-col>
@@ -111,7 +111,7 @@
               </template>
               <v-date-picker
                 v-model="selectedDueDate"
-                @input="handleDueDateInput"
+                @update:model-value="handleDueDateInput"
               ></v-date-picker>
             </v-menu>
           </v-col>
@@ -299,22 +299,22 @@ function handleAmountBlur() {
 }
 
 // Handle date selection from date picker
-function handleDateInput() {
+function handleDateInput(val) {
   dateMenu.value = false;
-  if (selectedDate.value) {
-    const formattedDate = formatDateForInput(selectedDate.value);
-    form.value.date = formattedDate;
+  if (val) {
+    form.value.date = formatDateForInput(val);
+    selectedDate.value = val;
   }
 }
 
-// Handle due date selection from date picker
-function handleDueDateInput() {
+function handleDueDateInput(val) {
   dueDateMenu.value = false;
-  if (selectedDueDate.value) {
-    const formattedDate = formatDateForInput(selectedDueDate.value);
-    form.value.dueDate = formattedDate;
+  if (val) {
+    form.value.dueDate = formatDateForInput(val);
+    selectedDueDate.value = val;
   } else {
     form.value.dueDate = null;
+    selectedDueDate.value = null;
   }
 }
 
