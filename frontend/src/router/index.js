@@ -6,6 +6,7 @@ import FinanceDashboard from "../views/FinanceDashboard.vue";
 import Dashboard from "../views/Dashboard.vue";
 import IncomeCategories from "../views/IncomeCategories.vue";
 import ExpenseCategories from "../views/ExpenseCategories.vue";
+import DebtDashboard from "../views/DebtDashboard.vue";
 
 const routes = [
   {
@@ -39,6 +40,10 @@ const routes = [
   {
     path: "/categories/expense",
     component: ExpenseCategories,
+  },
+  {
+    path: "/debts",
+    component: DebtDashboard,
   },
 ];
 
